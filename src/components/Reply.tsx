@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { db } from '../Firebase';
+import { Card } from '@material-ui/core';
 
 interface Props {
   commentRef?: firebase.firestore.DocumentReference<firebase.firestore.DocumentData>
@@ -8,7 +9,6 @@ interface Props {
 
 export default function Reply(props: Props) {
   const [iconURL, setIconURL] = useState('');
-  const [creator, setCreator] = useState('');
   const [creatorURL, setCreatorURL] = useState('');
   const [reply, setReply] = useState('');
 
@@ -24,7 +24,6 @@ export default function Reply(props: Props) {
           // 参照先のユーザ情報の取得
           const parentSnap = await doc.data().userRef.get();
           setIconURL(parentSnap.data().iconURL);
-          setCreator(parentSnap.data().name);
           setCreatorURL('/comic_list/'+ parentSnap.id);
           // リプライ内容の取得
           setReply(doc.data().content);
@@ -38,12 +37,11 @@ export default function Reply(props: Props) {
   }, [props.commentRef])
 
   return (
-    <div>
+    <Card style={{ width: '100%', paddingLeft: '20px', paddingTop: '10px'}}>
       <Link to={creatorURL}>
-        <img src={iconURL} alt="icon"/>
-        <p>{creator}</p>
+        <img src={iconURL} alt="icon" style={{ float: 'left' }}/>
       </Link>
       <p>{reply}</p>
-    </div>
+    </Card>
   );
 }
