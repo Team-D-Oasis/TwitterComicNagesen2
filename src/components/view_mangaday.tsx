@@ -4,17 +4,19 @@ interface Props {
   comicRef: firebase.firestore.DocumentReference<firebase.firestore.DocumentData> | undefined
 }
 
+/* 漫画の投降日時を表示させるコンポーネント*/
 // 引数 props : commicsのRef
 // 使用例 <View_mangatitle comicRef={comicRef}/>
 export default function Header(props : Props) {
   const [manga_day, setmanga_day] = useState(Date);
 
-  // firebaseからサーチする
   useEffect(
     () => {
+      // 空回り
       if (props.comicRef === undefined) {
         return
       }
+      // firebaseからサーチする
       props.comicRef.get().then(function(doc) {
         if (doc.exists) {
             console.log("Document data:", doc.data());
