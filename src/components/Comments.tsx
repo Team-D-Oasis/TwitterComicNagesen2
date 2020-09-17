@@ -62,7 +62,7 @@ export default function Comments(props: Props) {
             .catch((error) => {
                 console.log(`データの取得に失敗しました (${error})`);
             });
-    }, [buff]);
+    }, []);
 
     
 
