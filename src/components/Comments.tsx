@@ -10,7 +10,7 @@ const useStyles = makeStyles(() =>
             border: "solid 3px #364e96",
             margin: "50px auto",
             width: "80%",
-            height: "600px",
+            height: "400px",
             padding: "0",
             overflow: "auto"
         },
@@ -37,7 +37,7 @@ export default function Comments(props: Props) {
             const querySnapshot = await db.collection("comments").where("comicRef", "==", props.comicRef).get();
             setComments(querySnapshot.docs);
 
-            console.log("test", querySnapshot.docs[0].data().commentRef)
+            
         }
 
         f();
