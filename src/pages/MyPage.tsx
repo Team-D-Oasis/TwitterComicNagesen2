@@ -93,7 +93,7 @@ export default function MyPage() {
           <MyPageMenu></MyPageMenu>
         </Grid>
         { userRef &&
-          <Grid item xs>
+          <Grid item xs={9}>
           {
             MyPageContent()
           }

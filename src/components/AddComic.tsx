@@ -75,6 +75,12 @@ export default function AddComicComponent() {
       return(
         <div key={index}>
           <TextField
+            required
+            fullWidth
+            label="ツイッター漫画URL"
+            variant="filled"
+            className={classes.textfield}
+            value={comicURL}
             onChange={
               (event: React.ChangeEvent<HTMLInputElement>) =>{
                 const newtwitterURLs = [...URLs];
@@ -82,11 +88,6 @@ export default function AddComicComponent() {
                 settwitterURLs(newtwitterURLs);
                 console.log(URLs);
             }}
-            required
-            label="ツイッター漫画URL"
-            value={comicURL}
-            variant="filled"
-            className={classes.textfield}
           />
         </div>
       )
@@ -117,16 +118,17 @@ export default function AddComicComponent() {
     <div>
       <div>
         <TextField
+          required
+          fullWidth
+          label="タイトル"
+          variant="filled"
+          className={classes.textfield}
+          value={title}
           onChange={
             (event: React.ChangeEvent<HTMLInputElement>) =>{
               setTitle(event.target.value);
               console.log(title);
           }}
-          required
-          label="タイトル"
-          value={title}
-          variant="filled"
-          className={classes.textfield}
         />
       </div>
       <div>
