@@ -18,10 +18,17 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function AddComicComponent() {
   const {user, login, logout} = useUser();
-  const userRef = db.collection("users").doc(String(user?.uid));
+  const [userRef, setUserRef] = useState<firebase.firestore.DocumentReference<firebase.firestore.DocumentData>>();
   const [title, setTitle] = useState<string>("");
   const [comicURLs, setComicURLs] = useState<string[]>([""]);
   const classes = useStyles();
+
+  useEffect(() => {
+    if (user) {
+      const userRef = db.collection('users').doc(user.uid);
+      setUserRef(userRef);
+    }
+  }, [user])
 
   function resetForm(){
     setTitle("");
