@@ -3,8 +3,6 @@ import { makeStyles, createStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import { db } from '../Firebase';
 import Comment from './Comment';
-import { DataUsageSharp } from '@material-ui/icons';
-import { cpuUsage } from 'process';
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -21,60 +19,42 @@ const useStyles = makeStyles(() =>
 
 interface Props {
     comicRef?: firebase.firestore.DocumentReference<firebase.firestore.DocumentData>;
-    comicId:String;
 }
 
 export default function Comments(props: Props) {
     const useClasses = useStyles();
-    const [buff, setBuff] = useState(Array);
-    const [buffUser, setBuffUser] = useState(Array);
-    const [buffComic, setBuffComic] = useState(Array);
-    let buffArr: any[] = new Array();
-    let buffComicComment: any[] = new Array();
+    const [comments, setComments] = useState<firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>[]>([]);
 
     useEffect(() => {
+        console.log("Comments")
+        if (!props.comicRef) {
+            return;
+        }
 
-        db.collection("comments").get().then(async (querySnapshot) => {
-            //buff(comments情報(price,content))
-            querySnapshot.forEach((doc) => {
-                buffArr.push([doc.data().price, doc.data().content]);
-            });
-            setBuff(buff.concat(buffArr))
+        console.log(props.comicRef);
 
-            //buffUser(user情報)
-            const buffUserArr = await Promise.all(
-                querySnapshot.docs.map(async (doc) => {
-                    const userData = (await doc.data().userRef.get()).data();
-                    return [userData.iconURL, userData.name];
-                })
-            );
-            //buffComic(commentsのcomicID)
-            const buffComicArr = await Promise.all(
-                querySnapshot.docs.map(async (doc) => {
-                    const comicData = (await doc.data().comicRef.get()).id;
-                    return comicData;
-                })
-            );
-            setBuffUser(buffUserArr);
-            setBuffComic(buffComicArr);
+        const f = async () => {
+            const querySnapshot = await db.collection("comments").where("comicRef", "==", props.comicRef).get();
+            setComments(querySnapshot.docs);
 
-        })
-            .catch((error) => {
-                console.log(`データの取得に失敗しました (${error})`);
-            });
-    }, []);
+            console.log("test", querySnapshot.docs[0].data().commentRef)
+        }
 
-    
+        f();
+    }, [props.comicRef]);
 
     return (
         <List className={useClasses.commentsBox}>
-            {buffComic.map((comicData: any, index) => {
-                if(comicData==props.comicId){
-                return <Comment userURL={buffUser[index]} userName={buffUser[index]} price={buff[index]} content={buff[index]} key={index.toString()} />
-                }
+            {comments.map((comment) => {
+                return (
+                    <Comment
+                        key={comment.id}
+                        commentRef={comment}
+                        content={comment.data().content}
+                        price={comment.data().price}
+                    />
+                )
             })}
         </List>
     );
-
-
 }

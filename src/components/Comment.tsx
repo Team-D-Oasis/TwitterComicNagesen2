@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
@@ -7,8 +7,13 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 
-const useStyles = makeStyles(() =>
+interface Props {
+    commentRef: any;
+    content: string;
+    price: number;
+}
 
+const useStyles = makeStyles(() =>
     createStyles({
 
         "moneyComment": {
@@ -20,24 +25,37 @@ const useStyles = makeStyles(() =>
             width: "80%"
         },
         "comment": {
-
         }
     }),
-
 );
-const Comment = (props:any) => {
+
+const Comment = (props: Props) => {
     const useClasses = useStyles();
+    const [userData, setUserData] = useState<any>();
     //投げ銭金額用の変数
-    let money:number=props.money
+    // let money:number=props.money
     //moneyに金額の有無によってコメント別のスタイルを代入
+
+    useEffect(() => {
+        const f = async () => {
+            const user = await props.commentRef.data().userRef.get();
+            const userData = user.data();
+            console.log(userData)
+            setUserData(userData)
+        }
+
+        f();
+    }, []);
     
     return (
         <ListItem alignItems="flex-start" className={useClasses.moneyComment}>
-            <ListItemAvatar>
-                <Avatar alt="Remy Sharp" src={String(props.userURL[0])} />
-            </ListItemAvatar>
+            { userData && (
+                <ListItemAvatar>
+                    <Avatar alt="Remy Sharp" src={userData.iconURL} />
+                </ListItemAvatar>
+            )}
             <ListItemText
-                primary={props.userName[1]}
+                primary={userData ? userData.name : ""}
                 secondary={
                     <React.Fragment>
                         <Typography
@@ -46,9 +64,9 @@ const Comment = (props:any) => {
                             color="textPrimary"
                             className={useClasses.moneyCommentBox}
                         >
-                        {props.price[0]}
+                        {props.price}
                         </Typography>
-                        {props.content[1]}
+                        {props.content}
                     </React.Fragment>
                 }
             />
