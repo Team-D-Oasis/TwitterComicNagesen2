@@ -1,6 +1,11 @@
 const Twitter = require('twitter');
+require('dotenv').config();
 
-
+const client = new Twitter({
+  consumer_key: process.env.REACT_APP_TWITTER_CONSUMER_KEY,
+  consumer_secret: process.env.REACT_APP_TWITTER_CONSUMER_SECRET,
+  bearer_token: process.env.REACT_APP_TWITTER_BEARER_TOKEN
+});
 
 function asyncFetchImageURLListFromTwitter(twitterID: string) {
   return new Promise((resolve, reject) => {
