@@ -25,6 +25,9 @@ const useStyles = makeStyles((theme: Theme) =>
       textAlign: 'center',
       color: theme.palette.text.secondary,
     },
+    contentTop: {
+      margin: theme.spacing(2),
+    }
   }),
 );
 
@@ -94,9 +97,10 @@ export default function MyPage() {
         </Grid>
         { userRef &&
           <Grid item xs={9}>
-          {
-            MyPageContent()
-          }
+            <div className={classes.contentTop}></div>
+            {
+              MyPageContent()
+            }
           </Grid>
         }
       </Grid>

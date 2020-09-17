@@ -9,7 +9,7 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     textfield: {
-      margin: theme.spacing(2)
+      margin: theme.spacing(1)
     },
     button: {
       margin: theme.spacing(1),
