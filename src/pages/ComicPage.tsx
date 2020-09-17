@@ -59,13 +59,21 @@ export default function ComicPage() {
   const useClasses = useStyles();
   const { comicId } = useParams<{ comicId: string }>();
   const [comicRef, setComicRef] = useState<firebase.firestore.DocumentReference<firebase.firestore.DocumentData>>();
+  const [comments, setComments] = useState<firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>[]>([]);
+
+  async function updateComments(comicRef: firebase.firestore.DocumentReference<firebase.firestore.DocumentData>) {
+      const querySnapshot = await db.collection("comments").where("comicRef", "==", comicRef).get();
+      setComments(querySnapshot.docs);
+  }
 
   useEffect(() => {
     console.log(comicId);
 
     const comicRef = db.collection("comics").doc(comicId);
-    setComicRef(comicRef);
     console.log(comicRef);
+    setComicRef(comicRef);
+
+    updateComments(comicRef);
   }, []);
 
   return (
@@ -75,9 +83,9 @@ export default function ComicPage() {
         <div className={useClasses.commentMainBox}>
           <div className={useClasses.commentBox}>
             
-            <Comments comicRef={comicRef} />
+            <Comments comments={comments} comicRef={comicRef} />
             <div className={useClasses.nagesenButton}>
-              <NagesenButton comicRef={comicRef}/>
+              <NagesenButton comicRef={comicRef} updateComments={updateComments} />
             </div>
           </div>
         </div>
