@@ -4,6 +4,7 @@ interface Props {
   comicRef: firebase.firestore.DocumentReference<firebase.firestore.DocumentData> | undefined
 }
 
+/* 漫画のタイトルを表示させるコンポーネント*/
 // 引数 props : commicsのRef
 // 使用例 <View_mangaday comicRef={comicRef}/>
 export default function Header(props : Props) {
