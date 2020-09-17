@@ -71,10 +71,8 @@ export default function ComicPage() {
   return (
     <div className={useClasses.comicPage}>
 
-      
         <div className={useClasses.commentMainBox}>
-          <div className={useClasses.commentBox}>
-            
+          <div className={useClasses.commentBox}>     
             <Comments comicRef={comicRef} />
             <div className={useClasses.nagesenButton}>
               <NagesenButton comicRef={comicRef}/>

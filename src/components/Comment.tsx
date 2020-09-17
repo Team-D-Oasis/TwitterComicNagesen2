@@ -44,7 +44,13 @@ const useStyles = makeStyles(() =>
             padding:"3px",
            background:"rgba(255,255,255,0.3)",
            borderRadius:"3px"
-        }
+        },
+        "colorA":{},
+        "colorB":{},
+        "colorC":{},
+        "colorD":{},
+        "colorE":{}
+
     }),
 );
 
@@ -52,11 +58,17 @@ const Comment = (props: Props) => {
     const useClasses = useStyles();
     const [userData, setUserData] = useState<any>();
     //投げ銭金額用の変数
-    let money: number = props.price
+    let money: number = props.price;
+
+    let moneyStyle:String
     //moneyに金額の有無によってコメント別のスタイルを代入
-    if (money >= 1000) {
-        console.log("赤")
-    }
+    if (money >= 100) {moneyStyle=useClasses.colorA}
+    if (money >= 500) {moneyStyle=useClasses.colorB}
+    if (money >= 1000) {moneyStyle=useClasses.colorC}
+    if (money >= 5000) {moneyStyle=useClasses.colorD}
+    if (money >= 10000) {moneyStyle=useClasses.colorE}
+    
+
 
     useEffect(() => {
         const f = async () => {
