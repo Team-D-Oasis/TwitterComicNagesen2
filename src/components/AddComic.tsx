@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { db } from '../Firebase';
 import TextField from '@material-ui/core/TextField';
 import { Button } from '@material-ui/core';
 import useUser from '../hooks/useUser';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+  import fetchImgArrayFromTwitterArray from './FetchFromTwitterLink';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -18,18 +19,25 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function AddComicComponent() {
   const {user, login, logout} = useUser();
-  const userRef = db.collection("users").doc(String(user?.uid));
+  const [userRef, setUserRef] = useState<firebase.firestore.DocumentReference<firebase.firestore.DocumentData>>();
   const [title, setTitle] = useState<string>("");
-  const [comicURLs, setComicURLs] = useState<string[]>([""]);
+  const [twitterURLs, settwitterURLs] = useState<string[]>([""]);
   const classes = useStyles();
+
+  useEffect(() => {
+    if (user) {
+      const userRef = db.collection('users').doc(user.uid);
+      setUserRef(userRef);
+    }
+  }, [user])
 
   function resetForm(){
     setTitle("");
-    setComicURLs([""]);
+    settwitterURLs([""]);
   }
 
-  function createComicRecord(){
-    if( userRef === null){
+  async function createComicRecord(){
+    if(userRef === null || userRef === undefined){
       console.log("failed to registrate beacause you are not signin.");
       resetForm();
       return
@@ -39,14 +47,17 @@ export default function AddComicComponent() {
       alert("Title cannot be empty.");
       return
     }
-    if(comicURLs.includes("")){
+    if(twitterURLs.includes("")){
       console.log("Comic URL cannnot be empty.");
       alert("Comic URL cannnot be empty.");
       return
     }
+
+    const imgArray = await fetchImgArrayFromTwitterArray(twitterURLs);
+    console.log("imgArray", imgArray);
     db.collection("comics").add({
       title: title,
-      images: comicURLs,
+      images: imgArray,
       createdAt: new Date,
       userRef: userRef
     })
@@ -66,9 +77,9 @@ export default function AddComicComponent() {
           <TextField
             onChange={
               (event: React.ChangeEvent<HTMLInputElement>) =>{
-                const newcomicURLS = [...URLs];
-                newcomicURLS[index] = event.target.value;
-                setComicURLs(newcomicURLS);
+                const newtwitterURLs = [...URLs];
+                newtwitterURLs[index] = event.target.value;
+                settwitterURLs(newtwitterURLs);
                 console.log(URLs);
             }}
             required id="standard-required"
@@ -85,22 +96,22 @@ export default function AddComicComponent() {
   }
 
   function deleteComicURLForm(){
-    let newURLs = [...comicURLs];
+    let newURLs = [...twitterURLs];
     if(newURLs.length == 1){
       return;
     }
     newURLs.pop();
-    setComicURLs(newURLs);
+    settwitterURLs(newURLs);
     console.log("delete comic url form");
-    console.log(comicURLs);
+    console.log(twitterURLs);
   }
 
   function addComicURLForm(){
-    let newURLs = [...comicURLs];
+    let newURLs = [...twitterURLs];
     newURLs.push("");
-    setComicURLs(newURLs);
+    settwitterURLs(newURLs);
     console.log("add comic url form");
-    console.log(comicURLs);
+    console.log(twitterURLs);
   }
 
   return(
@@ -122,7 +133,7 @@ export default function AddComicComponent() {
         />
       </div>
       <div>
-        {displayInputForm(comicURLs)}
+        {displayInputForm(twitterURLs)}
       </div>
       <Button
         onClick={addComicURLForm}
