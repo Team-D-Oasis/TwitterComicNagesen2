@@ -1,5 +1,6 @@
-const Twitter = require('twitter');
 require('dotenv').config();
+const Twitter = require('twitter');
+
 
 const client = new Twitter({
   consumer_key: process.env.REACT_APP_TWITTER_CONSUMER_KEY,
@@ -35,8 +36,6 @@ async function fetchImageURLFromTwitter(twitterURL: string){
   return imgURLArray;
 }
 
-// const twitterURLArray = ["https://twitter.com/Sora_Misaki_/status/1306065272768352256", "https://twitter.com/Sora_Misaki_/status/1306065272768352256"]
-
 export default async function fetchImgArrayFromTwitterArray(twitterURLArray: string[]) {
   const imgURLArray = await Promise.all(
     twitterURLArray.map(async function(twitterURL: string){
@@ -47,5 +46,3 @@ export default async function fetchImgArrayFromTwitterArray(twitterURLArray: str
   console.log(imgArray);
   return imgArray;
 }
-
-// fetchImgArrayFromTwitterArray(twitterURLArray);
