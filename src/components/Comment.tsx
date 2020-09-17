@@ -15,16 +15,35 @@ interface Props {
 
 const useStyles = makeStyles(() =>
     createStyles({
-
         "moneyComment": {
             background: "#f44336",
-            height: "100px"
+            height: "100px",
+            borderRadius:"5px",
+            marginBottom:"2px"
         },
         "moneyCommentBox": {
             background: "#ff9800",
             width: "80%"
         },
-        "comment": {
+        "commentBox": {
+
+        },
+        "name": {
+
+        },
+        "price": {
+            fontWeight:"bold"
+        },
+        "content": {
+
+        },
+        "topBox":{
+            
+        },
+        "contentBox":{
+            padding:"3px",
+           background:"rgba(255,255,255,0.3)",
+           borderRadius:"3px"
         }
     }),
 );
@@ -33,8 +52,11 @@ const Comment = (props: Props) => {
     const useClasses = useStyles();
     const [userData, setUserData] = useState<any>();
     //投げ銭金額用の変数
-    // let money:number=props.money
+    let money: number = props.price
     //moneyに金額の有無によってコメント別のスタイルを代入
+    if (money >= 1000) {
+        console.log("赤")
+    }
 
     useEffect(() => {
         const f = async () => {
@@ -46,7 +68,7 @@ const Comment = (props: Props) => {
 
         f();
     }, []);
-    
+
     return (
         <ListItem alignItems="flex-start" className={useClasses.moneyComment}>
             { userData && (
@@ -55,22 +77,22 @@ const Comment = (props: Props) => {
                 </ListItemAvatar>
             )}
             <ListItemText
-                primary={userData ? userData.name : ""}
+
                 secondary={
                     <React.Fragment>
-                        <Typography
-                            component="span"
-                            variant="body2"
-                            color="textPrimary"
-                            className={useClasses.moneyCommentBox}
-                        >
-                        {props.price}
-                        </Typography>
-                        {props.content}
+                        <div className={useClasses.commentBox}>
+                            <div className={useClasses.topBox}>
+                                <div className={useClasses.name}>{userData ? userData.name : ""}</div>
+                                <div className={useClasses.price}>{"¥"+props.price}</div>
+                            </div>
+                            <div className={useClasses.contentBox}>
+                                <div className={useClasses.content}>{props.content}</div>
+                            </div>
+                        </div>
                     </React.Fragment>
                 }
             />
-        </ListItem>    
+        </ListItem>
     )
 }
 
