@@ -58,7 +58,7 @@ export default function NagesenButton(props: Props) {
       <Button
         variant="contained"
         color="secondary"
-        size="large"
+        style={{fontSize: "60px"}}
         onClick={onButtonClick}
       >投げ銭する</Button>
     </div>
