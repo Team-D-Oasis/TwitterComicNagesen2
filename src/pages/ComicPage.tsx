@@ -72,8 +72,7 @@ export default function ComicPage() {
     console.log(comicId);
 
     const comicRef = db.collection("comics").doc(comicId);
-    const comicRefCreator=comicRef.collection("userRef").doc()
-    setComicRefCreator(comicRefCreator)
+    
     setComicRef(comicRef);
     updateComments(comicRef);
   }, []);
