@@ -16,10 +16,7 @@ interface Props {
 const useStyles = makeStyles(() =>
     createStyles({
         "moneyComment": {
-            background: "#f44336",
-            height: "100px",
-            borderRadius:"5px",
-            marginBottom:"2px"
+
         },
         "moneyCommentBox": {
             background: "#ff9800",
@@ -32,25 +29,48 @@ const useStyles = makeStyles(() =>
 
         },
         "price": {
-            fontWeight:"bold"
+            fontWeight: "bold"
         },
         "content": {
 
         },
-        "topBox":{
-            
-        },
-        "contentBox":{
-            padding:"3px",
-           background:"rgba(255,255,255,0.3)",
-           borderRadius:"3px"
-        },
-        "colorA":{},
-        "colorB":{},
-        "colorC":{},
-        "colorD":{},
-        "colorE":{}
+        "topBox": {
 
+        },
+        "contentBox": {
+            padding: "3px",
+            background: "rgba(255,255,255,0.3)",
+            borderRadius: "3px"
+        },
+        "noColor": {
+            borderRadius: "5px",
+            marginBottom: "2px"
+        },
+        "colorA": {
+            background: "#00FFFF",
+            borderRadius: "5px",
+            marginBottom: "2px"
+        },
+        "colorB": {
+            background: "#40E0D0",
+            borderRadius: "5px",
+            marginBottom: "2px"
+        },
+        "colorC": {
+            background: "#ADFF2F",
+            borderRadius: "5px",
+            marginBottom: "2px"
+        },
+        "colorD": {
+            background: "#FFD700",
+            borderRadius: "5px",
+            marginBottom: "2px"
+        },
+        "colorE": {
+            background: "#fFF8C00",
+            borderRadius: "5px",
+            marginBottom: "2px"
+        }
     }),
 );
 
@@ -60,14 +80,15 @@ const Comment = (props: Props) => {
     //投げ銭金額用の変数
     let money: number = props.price;
 
-    let moneyStyle:String
+    let moneyStyle: any
     //moneyに金額の有無によってコメント別のスタイルを代入
-    if (money >= 100) {moneyStyle=useClasses.colorA}
-    if (money >= 500) {moneyStyle=useClasses.colorB}
-    if (money >= 1000) {moneyStyle=useClasses.colorC}
-    if (money >= 5000) {moneyStyle=useClasses.colorD}
-    if (money >= 10000) {moneyStyle=useClasses.colorE}
-    
+    if (money == 0) { moneyStyle = useClasses.noColor }
+    if (money <= 100) { moneyStyle = useClasses.colorA }
+    if (money >= 500) { moneyStyle = useClasses.colorB }
+    if (money >= 1000) { moneyStyle = useClasses.colorC }
+    if (money >= 5000) { moneyStyle = useClasses.colorD }
+    if (money >= 10000) { moneyStyle = useClasses.colorE }
+
 
 
     useEffect(() => {
@@ -82,7 +103,7 @@ const Comment = (props: Props) => {
     }, []);
 
     return (
-        <ListItem alignItems="flex-start" className={useClasses.moneyComment}>
+        <ListItem alignItems="flex-start" className={moneyStyle}>
             { userData && (
                 <ListItemAvatar>
                     <Avatar alt="Remy Sharp" src={userData.iconURL} />
@@ -95,7 +116,7 @@ const Comment = (props: Props) => {
                         <div className={useClasses.commentBox}>
                             <div className={useClasses.topBox}>
                                 <div className={useClasses.name}>{userData ? userData.name : ""}</div>
-                                <div className={useClasses.price}>{"¥"+props.price}</div>
+                                <div className={useClasses.price}>{"¥" + props.price}</div>
                             </div>
                             <div className={useClasses.contentBox}>
                                 <div className={useClasses.content}>{props.content}</div>

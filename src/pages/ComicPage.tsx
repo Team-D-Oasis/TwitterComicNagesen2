@@ -59,23 +59,34 @@ export default function ComicPage() {
   const useClasses = useStyles();
   const { comicId } = useParams<{ comicId: string }>();
   const [comicRef, setComicRef] = useState<firebase.firestore.DocumentReference<firebase.firestore.DocumentData>>();
+  const [comments, setComments] = useState<firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>[]>([]);
+  const [comicRefCreator, setComicRefCreator]=useState<firebase.firestore.DocumentReference<firebase.firestore.DocumentData>>();
+
+  async function updateComments(comicRef: firebase.firestore.DocumentReference<firebase.firestore.DocumentData>) {
+      const querySnapshot = await db.collection("comments").where("comicRef", "==", comicRef).get();
+      setComments(querySnapshot.docs);
+  }
+
 
   useEffect(() => {
     console.log(comicId);
 
     const comicRef = db.collection("comics").doc(comicId);
+    const comicRefCreator=comicRef.collection("userRef").doc()
+    setComicRefCreator(comicRefCreator)
     setComicRef(comicRef);
-    console.log(comicRef);
+    updateComments(comicRef);
   }, []);
 
   return (
     <div className={useClasses.comicPage}>
-
         <div className={useClasses.commentMainBox}>
-          <div className={useClasses.commentBox}>     
-            <Comments comicRef={comicRef} />
+          <div className={useClasses.commentBox}>
+           <CreatorCard userRef={comicRefCreator}/>
+            <Comments comments={comments} comicRef={comicRef} />
+            
             <div className={useClasses.nagesenButton}>
-              <NagesenButton comicRef={comicRef}/>
+              <NagesenButton comicRef={comicRef} updateComments={updateComments} />
             </div>
           </div>
         </div>

@@ -19,11 +19,13 @@ const useStyles = makeStyles(() =>
 
 interface Props {
     comicRef?: firebase.firestore.DocumentReference<firebase.firestore.DocumentData>;
+    comments: firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>[];
 }
 
 export default function Comments(props: Props) {
     
     const useClasses = useStyles();
+    /*
     const [comments, setComments] = useState<firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>[]>([]);
 
     useEffect(() => {
@@ -41,10 +43,11 @@ export default function Comments(props: Props) {
 
         f();
     }, [props.comicRef]);
+    */
 
     return (
         <List className={useClasses.commentsBox}>
-            {comments.map((comment) => {
+            {props.comments.map((comment) => {
                 return (
                     <Comment
                         key={comment.id}

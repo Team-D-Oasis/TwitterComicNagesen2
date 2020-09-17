@@ -15,6 +15,7 @@ interface Props {
   comicRef?: firebase.firestore.DocumentReference<firebase.firestore.DocumentData>;
   isOpen: boolean;
   onClose(): void;
+  updateComments: Function;
 }
 
 export default function NagesenModal(props: Props) {
@@ -56,6 +57,8 @@ export default function NagesenModal(props: Props) {
         console.log("投げ銭完了!", price, (await commentRef.get()).data());
 
         setIsFinished(true);
+
+        props.updateComments(props.comicRef);
       } catch(err) {
         console.log(err)
       }
@@ -84,6 +87,7 @@ export default function NagesenModal(props: Props) {
         { nagesenPrices.map((price) => {
           return (
             <Button
+              key={price}
               onClick={() => setPrice(price)}
             >
               {price}円

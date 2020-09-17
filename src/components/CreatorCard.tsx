@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-
 interface Props {
-  comicRef?: firebase.firestore.DocumentReference<firebase.firestore.DocumentData>;
+  userRef?: firebase.firestore.DocumentReference<firebase.firestore.DocumentData>
 }
 
 export default function CreatorCard(props: Props) {
@@ -12,16 +11,19 @@ export default function CreatorCard(props: Props) {
   const [creatorURL, setCreatorURL] = useState('');
 
   useEffect(() => {
-    if (!props.comicRef) {
+    if (!props.userRef) {
       return;
     }
 
-    props.comicRef.get().then((snap: any) => {
+    props.userRef.get().then((snap: any) => {
+     console.log(snap)
+     /*
       setIconURL(snap.data().iconURL);
       setCreator(snap.data().name);
       setCreatorURL('/comic_list/'+ snap.id);
+      */
     });
-  },[props.comicRef])
+  },[props.userRef])
 
   return (
     <div>

@@ -7,6 +7,7 @@ import { db } from '../Firebase';
 
 interface Props {
   comicRef?: firebase.firestore.DocumentReference<firebase.firestore.DocumentData>;
+  updateComments: Function;
 }
 
 export default function NagesenButton(props: Props) {
@@ -47,6 +48,7 @@ export default function NagesenButton(props: Props) {
     <div>
       <NagesenModal
         comicRef={props.comicRef}
+        updateComments={props.updateComments}
         isOpen={nagesenModalIsOpen}
         onClose={onNagesenModalClose}
       />
