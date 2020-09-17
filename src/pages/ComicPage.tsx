@@ -6,9 +6,10 @@ import NagesenButton from "../components/NagesenButton";
 import Header from "../components/view_manga"
 import Comments from '../components/Comments';
 import Grid from '@material-ui/core/Grid';
-import { Paper, Typography } from '@material-ui/core';
+import { Container, Paper, Typography } from '@material-ui/core';
 import { classicNameResolver } from 'typescript';
-
+import UserCard from '../components/UserCard';
+import CreatorCard from '../components/CreatorCard';
 
 const useStyles = makeStyles(() =>
 
@@ -18,7 +19,9 @@ const useStyles = makeStyles(() =>
       paddingTop:"50px",
     },
     "commentMainBox":{
-      
+      position:"fixed",
+      top:"80px",
+      width:"30%"
     },
     "commentBox":{
       background:"rgb(250,250,250)",
@@ -32,8 +35,9 @@ const useStyles = makeStyles(() =>
     },
     "comicMainBox": {
       display: "flex",
-      justifyContent: "center", 
-      
+      justifyContent: "center",   
+      width:"70%",
+      marginLeft:"auto"
     },
     "comicBox": {
       display: "flex",
@@ -46,7 +50,7 @@ const useStyles = makeStyles(() =>
     },
     "comic":{
 
-    }
+    },
   }),
 
 );
@@ -67,21 +71,23 @@ export default function ComicPage() {
   return (
     <div className={useClasses.comicPage}>
 
-      <Grid container spacing={3} >
-        <Grid item xs={3} className={useClasses.commentMainBox}>
+      
+        <div className={useClasses.commentMainBox}>
           <div className={useClasses.commentBox}>
+            
             <Comments comicRef={comicRef} />
             <div className={useClasses.nagesenButton}>
               <NagesenButton comicRef={comicRef}/>
             </div>
           </div>
-        </Grid>
-        <Grid item xs={9} className={useClasses.comicMainBox}>
+        </div>
+      
+        <div className={useClasses.comicMainBox}>
           <div className={useClasses.comicBox}>
             <Header comicRef={comicRef}/>
           </div>
-        </Grid>
-      </Grid>
+        </div>
+   
 
     </div>
   );

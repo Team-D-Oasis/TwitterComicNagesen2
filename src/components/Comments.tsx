@@ -10,7 +10,7 @@ const useStyles = makeStyles(() =>
             border: "solid 3px #364e96",
             margin: "50px auto",
             width: "80%",
-            height: "600px",
+            height: "400px",
             padding: "0",
             overflow: "auto"
         },
