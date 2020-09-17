@@ -36,8 +36,6 @@ export default function Comments(props: Props) {
         const f = async () => {
             const querySnapshot = await db.collection("comments").where("comicRef", "==", props.comicRef).get();
             setComments(querySnapshot.docs);
-
-            console.log("test", querySnapshot.docs[0].data().commentRef)
         }
 
         f();
