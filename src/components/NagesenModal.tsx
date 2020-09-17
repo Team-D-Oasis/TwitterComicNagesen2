@@ -84,6 +84,7 @@ export default function NagesenModal(props: Props) {
         { nagesenPrices.map((price) => {
           return (
             <Button
+              key={price}
               onClick={() => setPrice(price)}
             >
               {price}円
