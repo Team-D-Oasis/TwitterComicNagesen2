@@ -10,6 +10,7 @@ import {
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import AddComic from '../components/AddComic';
 import ComicList from '../components/ComicList';
+import AccountRegistration from '../components/AccountRegistration';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -72,7 +73,7 @@ export default function MyPage() {
     } else if (nav === "漫画投稿") {
       return <AddComic></AddComic>
     } else if (nav === "口座登録") {
-      return <div></div>
+      return <AccountRegistration userRef={userRef}></AccountRegistration>
     }
   }
 
