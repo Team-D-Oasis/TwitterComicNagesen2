@@ -9,7 +9,6 @@ import Grid from '@material-ui/core/Grid';
 import { Paper, Typography } from '@material-ui/core';
 import { classicNameResolver } from 'typescript';
 
-
 const useStyles = makeStyles(() =>
 
   createStyles({
@@ -32,8 +31,7 @@ const useStyles = makeStyles(() =>
     },
     "comicMainBox": {
       display: "flex",
-      justifyContent: "center", 
-      
+      justifyContent: "center",   
     },
     "comicBox": {
       display: "flex",

@@ -33,7 +33,7 @@ export default function Comments(props: Props) {
     let buffComicComment: any[] = new Array();
 
     useEffect(() => {
-
+        
         db.collection("comments").get().then(async (querySnapshot) => {
             //buff(comments情報(price,content))
             querySnapshot.forEach((doc) => {
@@ -57,14 +57,12 @@ export default function Comments(props: Props) {
             );
             setBuffUser(buffUserArr);
             setBuffComic(buffComicArr);
-
+            
         })
             .catch((error) => {
                 console.log(`データの取得に失敗しました (${error})`);
             });
     }, []);
-
-    
 
     return (
         <List className={useClasses.commentsBox}>
