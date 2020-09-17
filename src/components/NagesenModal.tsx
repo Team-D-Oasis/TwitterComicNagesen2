@@ -4,6 +4,7 @@ import {
   TextField,
   FormControl,
   Button,
+  ButtonGroup,
 } from '@material-ui/core';
 import { modalStyles } from '../styles/ModalStyle';
 import {db} from '../Firebase';
@@ -22,6 +23,7 @@ export default function NagesenModal(props: Props) {
   const [comment, setComment] = useState<string>("");
   const [isFinished, setIsFinished] = useState<boolean>(false);
   const {user} = useUser();
+  const nagesenPrices: number[] = [100, 500, 1000, 5000, 10000];
 
   function validPrice(price: number) {
     return !isNaN(price) && price > 0;
@@ -78,6 +80,18 @@ export default function NagesenModal(props: Props) {
         value={price}
         onChange={onChangePrice}
       />
+      <ButtonGroup color="primary" style={{display: "flex", justifyContent: "center"}}>
+        { nagesenPrices.map((price) => {
+          return (
+            <Button
+              onClick={() => setPrice(price)}
+            >
+              {price}円
+            </Button>
+          )
+        })
+        }
+      </ButtonGroup>
       <TextField
         id="outlined-multiline-static"
         label="コメント"
