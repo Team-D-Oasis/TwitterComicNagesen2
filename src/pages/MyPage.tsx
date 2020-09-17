@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { db } from '../Firebase';
 import useUser from '../hooks/useUser';
 import {
+  Divider,
   Grid,
+  Link,
   List,
   ListItem,
   ListItemText,
@@ -11,6 +13,7 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import AddComic from '../components/AddComic';
 import ComicList from '../components/ComicList';
 import AccountRegistration from '../components/AccountRegistration';
+import ListItemLink from '../components/ListItemLink';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -69,7 +72,13 @@ export default function MyPage() {
 
   function MyPageContent() {
     if (nav === "漫画一覧") {
-      return <ComicList userRef={userRef}></ComicList>
+      return (
+        <List>
+          <ListItemLink primary={"実際の漫画一覧画面"} to={`/comic_list/${userRef?.id}`} />
+          <Divider />
+          <ComicList userRef={userRef}></ComicList>
+        </List>
+      );
     } else if (nav === "漫画投稿") {
       return <AddComic></AddComic>
     } else if (nav === "口座登録") {
