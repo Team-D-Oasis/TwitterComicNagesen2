@@ -73,7 +73,7 @@ export default function AddComicComponent() {
   function displayInputForm(URLs: string[]){
     const urlFormArray = URLs.map(function(comicURL, index){
       return(
-        <div>
+        <div key={index}>
           <TextField
             onChange={
               (event: React.ChangeEvent<HTMLInputElement>) =>{
@@ -82,9 +82,8 @@ export default function AddComicComponent() {
                 settwitterURLs(newtwitterURLs);
                 console.log(URLs);
             }}
-            required id="standard-required"
+            required
             label="ツイッター漫画URL"
-            defaultValue=""
             value={comicURL}
             variant="filled"
             className={classes.textfield}
@@ -124,9 +123,7 @@ export default function AddComicComponent() {
               console.log(title);
           }}
           required
-          id="standard-required"
           label="タイトル"
-          defaultValue=""
           value={title}
           variant="filled"
           className={classes.textfield}
