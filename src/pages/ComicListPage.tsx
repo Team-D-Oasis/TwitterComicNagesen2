@@ -16,7 +16,11 @@ export default function ComicListPage() {
   }, [])
 
   return (
-    <><UserCard userRef={userRef} />
-      <Comics userRef={userRef} /></>
+    <>
+      <div style={{padding: "16px"}}>
+        <UserCard userRef={userRef} />
+      </div>
+      <Comics userRef={userRef} />
+    </>
   )
 }
