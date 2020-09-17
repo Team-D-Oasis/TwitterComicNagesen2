@@ -2,6 +2,8 @@ import { createStyles, Modal } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React, { useState, useEffect } from 'react';
 
+/* 漫画を表示させるコンポーネント（画像をクリックすると、モーダルが出て拡大する）*/
+
 // モーダルを出す位置
 function getModalStyle() {
   const top = 50;
@@ -54,29 +56,38 @@ interface Props {
 
 // 引数 props : commicsのRef
 // 使用例　<View_manga comicRef={comicRef}/>
-export default function Header(props: Props) {
-  const classes = useStyles();
+export default function View(props : Props) {
+  // firebaseから引っ張ってきたimagesの配列
   const [manga_urls, setmanga_urls] = useState([]);
+
+  // モーダルに表示させるurl
+  const [modal_url, setmangaurl] = useState('');
+
+  const classes = useStyles();
+
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
-  const [mangaurl, setmangaurl] = useState('');
 
+  // モーダルをオープンさせ、表示するurlを更新
   const handleOpen = (url: string) => {
     setOpen(true);
     setmangaurl(url);
   };
 
+  // モーダルをクローズ
   const handleClose = () => {
     setOpen(false);
   };
 
-  // firebaseからサーチする
   useEffect(
     () => {
+      // 空回り
       if (props.comicRef === undefined) {
         return
       }
-      props.comicRef.get().then(function (doc) {
+
+      // firebaseからサーチする
+      props.comicRef.get().then(function(doc) {
         if (doc.exists) {
           console.log("Document data:", doc.data());
           setmanga_urls(doc.data()!.images)
@@ -91,6 +102,7 @@ export default function Header(props: Props) {
     [props.comicRef]
   );
 
+  // 実行する部分
   const body = manga_urls.map((url) => (
     <div key={url} className={classes.box}>
       <img src={url} onClick={() => handleOpen(url)} className={classes.image}/>
@@ -101,14 +113,15 @@ export default function Header(props: Props) {
       >
         {
           <div style={modalStyle} className={classes.paper}>
-            <p id={url}>
-              <img src={mangaurl} key={mangaurl} className={classes.modalImage}/>
+            <p id={modal_url}>
+              <img src={modal_url} key={modal_url} className={classes.modalImage}/>
             </p>
           </div>
         }
       </Modal>
     </div>
   ))
+  
   return (
     <div>
       {body}

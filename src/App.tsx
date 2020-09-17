@@ -10,6 +10,7 @@ import './App.css';
 
 import firebase, {db} from './Firebase';
 import AppBar from './components/AppBar';
+import HomePage from './pages/HomePage';
 import MyPage from './pages/MyPage';
 import ComicPage from './pages/ComicPage';
 import ComicListPage from './pages/ComicListPage';
@@ -20,6 +21,9 @@ function App() {
       <Router>
         <AppBar />
         <Switch>
+          <Route path="/hp">
+            <HomePage />
+          </Route>
           <Route path="/my">
             <MyPage />
           </Route>

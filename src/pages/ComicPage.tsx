@@ -68,7 +68,7 @@ export default function ComicPage() {
       <Grid container spacing={3} >
         <Grid item xs={3} className={useClasses.commentMainBox}>
           <div className={useClasses.commentBox}>
-            <Comments comicId={comicId}/>
+            <Comments comicRef={comicRef} />
             <div className={useClasses.nagesenButton}>
               <NagesenButton comicRef={comicRef}/>
             </div>
