@@ -37,11 +37,11 @@ export default function AddComicComponent() {
   }
 
   async function createComicRecord(){
-    // if(userRef === null || userRef === undefined){
-    //   console.log("failed to registrate beacause you are not signin.");
-    //   resetForm();
-    //   return
-    // }
+    if(userRef === null || userRef === undefined){
+      console.log("failed to registrate beacause you are not signin.");
+      resetForm();
+      return
+    }
     if(title === ""){
       console.log("Title cannot be empty.");
       alert("Title cannot be empty.");
