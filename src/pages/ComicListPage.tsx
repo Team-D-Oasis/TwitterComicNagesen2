@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { db } from '../Firebase';
 import { useParams } from "react-router-dom";
 import Comics from '../components/ComicList';
+import UserCard from '../components/UserCard';
 
 export default function ComicListPage() {
   const { userId } = useParams<{userId: string}>();
@@ -15,6 +16,7 @@ export default function ComicListPage() {
   }, [])
 
   return (
-    <Comics userRef={userRef} />
+    <><UserCard userRef={userRef} />
+      <Comics userRef={userRef} /></>
   )
 }
