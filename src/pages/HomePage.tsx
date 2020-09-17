@@ -1,10 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../Firebase';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Viewtitle from '../components/view_mangatitle';
 import { List } from '@material-ui/core';
 import ListItemLink from '../components/ListItemLink';
+import MenuBookIcon from '@material-ui/icons/MenuBook';
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    title: {
+      margin: theme.spacing(2),
+    },
+  }),
+)
 
 export default function ComicPage() {
+  const classes = useStyles();
   const [comics, setComics] = useState<firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>[]>([]);
 
   useEffect(() => {
@@ -22,7 +33,7 @@ export default function ComicPage() {
 
   return (
     <div className="ComicPage">
-      <p>最新作!</p>
+      <h2 className={classes.title}>新着一覧</h2>
       <List>
         {
           comics.map((comic) => {
@@ -35,9 +46,10 @@ export default function ComicPage() {
             var sec   = ( d.getSeconds() < 10 ) ? '0' + d.getSeconds() : d.getSeconds();
             return (
               <ListItemLink 
-              key={comic.id} 
-              primary={comic.data().title + "   投稿日時 : " + year + "/" + month + "/" + day + " " + hour + ":" + min + ":" + sec} 
-              to={`/comic/${comic.id}`} 
+                key={comic.id} 
+                primary={comic.data().title + "   投稿日時 : " + year + "/" + month + "/" + day + " " + hour + ":" + min + ":" + sec} 
+                to={`/comic/${comic.id}`} 
+                icon={<MenuBookIcon />}
               />
             )
           })
