@@ -4,7 +4,7 @@ import { db } from '../Firebase';
 import { Card } from '@material-ui/core';
 
 interface Props {
-  commentRef?: firebase.firestore.DocumentReference<firebase.firestore.DocumentData>
+  commentRef: firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>
 }
 
 export default function Reply(props: Props) {
