@@ -30,6 +30,9 @@ const useStyles = makeStyles(() =>
       borderRadius:"20px",
       boxShadow:"0 0 30px grey", 
     },
+    "commentTitle":{
+      
+    },
     "nagesenButton": {
       display: "flex",
       justifyContent: "center"
@@ -65,7 +68,10 @@ export default function ComicPage() {
   const [title, setTitle] = useState<string>("");
 
   async function updateComments(comicRef: firebase.firestore.DocumentReference<firebase.firestore.DocumentData>) {
-      const querySnapshot = await db.collection("comments").where("comicRef", "==", comicRef).get();
+      const querySnapshot = await db.collection("comments")
+        .where("comicRef", "==", comicRef)
+        .orderBy("createdAt", "desc")
+        .get();
       setComments(querySnapshot.docs);
   }
 
@@ -100,6 +106,7 @@ export default function ComicPage() {
               <span style={{lineHeight: "48px", fontSize: "24px"}}>(投稿者)</span>
             </div>
             <Comments comments={comments} comicRef={comicRef} />
+            
             <div className={useClasses.nagesenButton}>
               <NagesenButton comicRef={comicRef} updateComments={updateComments} />
             </div>

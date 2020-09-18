@@ -67,7 +67,7 @@ const useStyles = makeStyles(() =>
             marginBottom: "2px"
         },
         "colorE": {
-            background: "#fFF8C00",
+            background: "#FF8C00",
             borderRadius: "5px",
             marginBottom: "2px"
         }
