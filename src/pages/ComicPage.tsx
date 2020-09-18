@@ -61,8 +61,8 @@ export default function ComicPage() {
   const { comicId } = useParams<{ comicId: string }>();
   const [comicRef, setComicRef] = useState<firebase.firestore.DocumentReference<firebase.firestore.DocumentData>>();
   const [comments, setComments] = useState<firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>[]>([]);
-  const [comicRefCreator, setComicRefCreator]=useState<firebase.firestore.DocumentReference<firebase.firestore.DocumentData>>();
-  let title:firebase.firestore.DocumentSnapshot<firebase.firestore.DocumentData>;
+  const [comicCreatorRef, setComicCreatorRef]=useState<firebase.firestore.DocumentReference<firebase.firestore.DocumentData>>();
+  const [title, setTitle] = useState<string>("");
 
   async function updateComments(comicRef: firebase.firestore.DocumentReference<firebase.firestore.DocumentData>) {
       const querySnapshot = await db.collection("comments").where("comicRef", "==", comicRef).get();
@@ -74,16 +74,18 @@ export default function ComicPage() {
     console.log(comicId);
 
     const comicRef = db.collection("comics").doc(comicId);
-    console.log(comicRef.get().then(function(doc) {
-      if (doc.exists) {
-          title=doc
-      } else {
-          // doc.data() will be undefined in this case
-          console.log("No such document!");
-      }
-  }).catch(function(error) {
-      console.log("Error getting document:", error);
-  }))
+    comicRef.get()
+      .then(async function(doc) {
+        if (doc.exists) {
+            setComicCreatorRef(doc.data()!.userRef);
+            setTitle(doc.data()!.title);
+        } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+        }
+      }).catch(function(error) {
+          console.log("Error getting document:", error);
+      })
 
     setComicRef(comicRef);
     updateComments(comicRef);
@@ -93,16 +95,20 @@ export default function ComicPage() {
     <div className={useClasses.comicPage}>
         <div className={useClasses.commentMainBox}>
           <div className={useClasses.commentBox}>
+            <div style={{display: "flex", justifyContent: "center"}}>
+              <UserCard userRef={comicCreatorRef}></UserCard>
+              <span style={{lineHeight: "48px", fontSize: "24px"}}>(投稿者)</span>
+            </div>
             <Comments comments={comments} comicRef={comicRef} />
             <div className={useClasses.nagesenButton}>
               <NagesenButton comicRef={comicRef} updateComments={updateComments} />
-              
             </div>
           </div>
         </div>
       
         <div className={useClasses.comicMainBox}>
           <div className={useClasses.comicBox}>
+            <h3>{title}</h3>
             <Header comicRef={comicRef}/>
           </div>
         </div>
