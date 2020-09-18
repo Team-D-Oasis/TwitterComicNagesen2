@@ -10,6 +10,7 @@ import { Container, Paper, Typography } from '@material-ui/core';
 import { classicNameResolver } from 'typescript';
 import UserCard from '../components/UserCard';
 import CreatorCard from '../components/CreatorCard';
+import Reply from '../components/Reply';
 
 const useStyles = makeStyles(() =>
 
@@ -60,32 +61,42 @@ export default function ComicPage() {
   const { comicId } = useParams<{ comicId: string }>();
   const [comicRef, setComicRef] = useState<firebase.firestore.DocumentReference<firebase.firestore.DocumentData>>();
   const [comments, setComments] = useState<firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>[]>([]);
+  const [comicRefCreator, setComicRefCreator]=useState<firebase.firestore.DocumentReference<firebase.firestore.DocumentData>>();
+  let title:firebase.firestore.DocumentSnapshot<firebase.firestore.DocumentData>;
 
   async function updateComments(comicRef: firebase.firestore.DocumentReference<firebase.firestore.DocumentData>) {
       const querySnapshot = await db.collection("comments").where("comicRef", "==", comicRef).get();
       setComments(querySnapshot.docs);
   }
 
+
   useEffect(() => {
     console.log(comicId);
 
     const comicRef = db.collection("comics").doc(comicId);
-    console.log(comicRef);
-    setComicRef(comicRef);
+    console.log(comicRef.get().then(function(doc) {
+      if (doc.exists) {
+          title=doc
+      } else {
+          // doc.data() will be undefined in this case
+          console.log("No such document!");
+      }
+  }).catch(function(error) {
+      console.log("Error getting document:", error);
+  }))
 
+    setComicRef(comicRef);
     updateComments(comicRef);
   }, []);
 
   return (
     <div className={useClasses.comicPage}>
-
-      
         <div className={useClasses.commentMainBox}>
           <div className={useClasses.commentBox}>
-            
             <Comments comments={comments} comicRef={comicRef} />
             <div className={useClasses.nagesenButton}>
               <NagesenButton comicRef={comicRef} updateComments={updateComments} />
+              
             </div>
           </div>
         </div>

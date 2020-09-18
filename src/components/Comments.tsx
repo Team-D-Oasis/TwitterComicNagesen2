@@ -23,6 +23,7 @@ interface Props {
 }
 
 export default function Comments(props: Props) {
+    
     const useClasses = useStyles();
     /*
     const [comments, setComments] = useState<firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>[]>([]);
