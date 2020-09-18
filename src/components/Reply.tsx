@@ -3,12 +3,37 @@ import { Link } from 'react-router-dom';
 import { db } from '../Firebase';
 import { Card } from '@material-ui/core';
 import SubdirectoryArrowRightIcon from '@material-ui/icons/SubdirectoryArrowRight';
+import { makeStyles, createStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(() => {
+  const borderSize = 0;
+  return createStyles({
+    root: {
+      width: `calc(100% - ${borderSize * 2}px)`,
+      display: "flex",
+      alignItems: "center",
+      backgroundColor: "#364e96",
+      color: "#fff",
+    },
+    icon: {
+      float: 'left',
+      borderRadius: "50%",
+    },
+    content: {
+      width: "calc(100% - 90px)",
+      marginLeft: "8px",
+      wordBreak: "break-all",
+      fontWeight: "bold",
+    }
+  });
+});
 
 interface Props {
   commentRef: any
 }
 
 export default function Reply(props: Props) {
+  const classes = useStyles();
   const [iconURL, setIconURL] = useState('');
   const [creatorURL, setCreatorURL] = useState('');
   const [reply, setReply] = useState('');
@@ -38,12 +63,12 @@ export default function Reply(props: Props) {
   }, [props.commentRef])
 
   return iconURL != '' ? (
-    <Card style={{ width: '100%'}}>
+    <Card className={classes.root}>
       <SubdirectoryArrowRightIcon style={{ float: 'left' }}/>
       <Link to={creatorURL}>
-        <img src={iconURL} alt="icon" style={{ float: 'left' }}/>
+        <img src={iconURL} alt="icon" className={classes.icon} />
       </Link>
-      <p>{reply}</p>
+      <p className={classes.content}>{reply}</p>
     </Card>
   ) : (<div></div>);
 }
