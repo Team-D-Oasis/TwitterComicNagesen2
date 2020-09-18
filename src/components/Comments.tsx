@@ -14,6 +14,13 @@ const useStyles = makeStyles(() =>
             padding: "0",
             overflow: "auto"
         },
+        "commentTitle":{
+            background:"#364e96",
+            color:"#FFFFFF",
+            textAlign:"center",
+            fontWeight:"bold",
+
+        }
     }),
 );
 
@@ -47,6 +54,7 @@ export default function Comments(props: Props) {
 
     return (
         <List className={useClasses.commentsBox}>
+            <div className={useClasses.commentTitle}>この漫画への反応</div>
             {props.comments.map((comment) => {
                 return (
                     <Comment

@@ -30,6 +30,9 @@ const useStyles = makeStyles(() =>
       borderRadius:"20px",
       boxShadow:"0 0 30px grey", 
     },
+    "commentTitle":{
+      
+    },
     "nagesenButton": {
       display: "flex",
       justifyContent: "center"
@@ -93,7 +96,9 @@ export default function ComicPage() {
     <div className={useClasses.comicPage}>
         <div className={useClasses.commentMainBox}>
           <div className={useClasses.commentBox}>
+            
             <Comments comments={comments} comicRef={comicRef} />
+            
             <div className={useClasses.nagesenButton}>
               <NagesenButton comicRef={comicRef} updateComments={updateComments} />
               
