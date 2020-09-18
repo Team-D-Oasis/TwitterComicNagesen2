@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { db } from '../Firebase';
 import { Card } from '@material-ui/core';
+import SubdirectoryArrowRightIcon from '@material-ui/icons/SubdirectoryArrowRight';
 
 interface Props {
-  commentRef: firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>
+  commentRef: any
 }
 
 export default function Reply(props: Props) {
@@ -36,12 +37,13 @@ export default function Reply(props: Props) {
     f();
   }, [props.commentRef])
 
-  return (
-    <Card style={{ width: '100%', paddingLeft: '20px', paddingTop: '10px'}}>
+  return iconURL != '' ? (
+    <Card style={{ width: '100%'}}>
+      <SubdirectoryArrowRightIcon style={{ float: 'left' }}/>
       <Link to={creatorURL}>
         <img src={iconURL} alt="icon" style={{ float: 'left' }}/>
       </Link>
       <p>{reply}</p>
     </Card>
-  );
+  ) : (<div></div>);
 }
