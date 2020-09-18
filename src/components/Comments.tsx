@@ -3,6 +3,7 @@ import { makeStyles, createStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import { db } from '../Firebase';
 import Comment from './Comment';
+import Reply from './Reply';
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -57,12 +58,15 @@ export default function Comments(props: Props) {
             <div className={useClasses.commentTitle}>この漫画への反応</div>
             {props.comments.map((comment) => {
                 return (
-                    <Comment
-                        key={comment.id}
-                        commentRef={comment}
-                        content={comment.data().content}
-                        price={comment.data().price}
-                    />
+                    <div>
+                        <Comment
+                            key={comment.id}
+                            commentRef={comment}
+                            content={comment.data().content}
+                            price={comment.data().price}
+                        />
+                        <Reply commentRef={db.collection("comments").doc(comment.id)}/>
+                    </div>
                 )
             })}
         </List>
