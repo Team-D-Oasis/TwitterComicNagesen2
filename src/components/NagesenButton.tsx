@@ -62,7 +62,7 @@ export default function NagesenButton(props: Props) {
         color="secondary"
         style={{fontSize: "60px"}}
         onClick={onButtonClick}
-      >投げ銭する</Button>
+      >応援する</Button>
     </div>
   );
 }
