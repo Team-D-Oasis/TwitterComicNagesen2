@@ -27,7 +27,7 @@ export default function NagesenModal(props: Props) {
   const nagesenPrices: number[] = [100, 500, 1000, 5000, 10000];
 
   function validPrice(price: number) {
-    return !isNaN(price) && price > 0;
+    return !isNaN(price) && price >= 0;
   }
 
   function onChangePrice(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) {
