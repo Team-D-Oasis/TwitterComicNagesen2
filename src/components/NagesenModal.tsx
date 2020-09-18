@@ -20,7 +20,7 @@ interface Props {
 
 export default function NagesenModal(props: Props) {
   const classes = modalStyles();
-  const [price, setPrice] = useState<number>(100);
+  const [price, setPrice] = useState<number>(0);
   const [comment, setComment] = useState<string>("");
   const [isFinished, setIsFinished] = useState<boolean>(false);
   const {user} = useUser();
@@ -110,7 +110,7 @@ export default function NagesenModal(props: Props) {
         color="secondary"
         onClick={onClickNagesen}
       >
-        投げ銭する！
+        応援する！
       </Button>
       <Button
         variant="contained"
