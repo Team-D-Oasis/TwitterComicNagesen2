@@ -43,6 +43,7 @@ const useStyles = makeStyles(() =>
             borderRadius: "3px"
         },
         "noColor": {
+            background:"#FFFFFF",
             borderRadius: "5px",
             marginBottom: "2px"
         },
@@ -82,8 +83,8 @@ const Comment = (props: Props) => {
 
     let moneyStyle: any
     //moneyに金額の有無によってコメント別のスタイルを代入
-    if (money == 0) { moneyStyle = useClasses.noColor }
-    if (money <= 100) { moneyStyle = useClasses.colorA }
+    if (money < 1) { moneyStyle = useClasses.noColor }
+    if (money <= 100 && money>=1) { moneyStyle = useClasses.colorA }
     if (money >= 500) { moneyStyle = useClasses.colorB }
     if (money >= 1000) { moneyStyle = useClasses.colorC }
     if (money >= 5000) { moneyStyle = useClasses.colorD }
@@ -116,7 +117,9 @@ const Comment = (props: Props) => {
                         <div className={useClasses.commentBox}>
                             <div className={useClasses.topBox}>
                                 <div className={useClasses.name}>{userData ? userData.name : ""}</div>
+                            
                                 <div className={useClasses.price}>{"¥" + props.price}</div>
+                                 
                             </div>
                             <div className={useClasses.contentBox}>
                                 <div className={useClasses.content}>{props.content}</div>

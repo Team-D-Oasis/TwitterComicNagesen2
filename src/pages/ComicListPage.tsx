@@ -7,6 +7,7 @@ import UserCard from '../components/UserCard';
 export default function ComicListPage() {
   const { userId } = useParams<{userId: string}>();
   const [userRef, setUserRef] = useState<firebase.firestore.DocumentReference<firebase.firestore.DocumentData>>();
+  let black:string="#000000"
 
   useEffect(() => {
     console.log(userId);
@@ -18,7 +19,7 @@ export default function ComicListPage() {
   return (
     <>
       <div style={{padding: "16px"}}>
-        <UserCard userRef={userRef} />
+        <UserCard userRef={userRef} color={black}/>
       </div>
       <Comics userRef={userRef} />
     </>
